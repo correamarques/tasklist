@@ -14,5 +14,10 @@ namespace App.Controllers
 
             return View();
         }
+
+        public ActionResult Tasks()
+        {
+            return View();
+        }
     }
 }
