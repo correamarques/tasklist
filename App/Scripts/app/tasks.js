@@ -1,1 +1,3 @@
-﻿console.log('task js loaded');
+﻿$(document).ready(function () {
+    console.log('teste');
+});
