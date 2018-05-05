@@ -17,6 +17,7 @@ namespace App.Models
     
         public TaskDbContext() : base("name=TaskDbContext")
         {
+            Database.SetInitializer<TaskDbContext>(new DropCreateDatabaseAlways<TaskDbContext>());
         }
 
         public System.Data.Entity.DbSet<App.Models.Task> Tasks { get; set; }
