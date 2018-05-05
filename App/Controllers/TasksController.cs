@@ -50,6 +50,13 @@ namespace App.Controllers
             }
 
             db.Entry(task).State = EntityState.Modified;
+            task.UpdatedAt = DateTime.Now;
+
+            Task oldTask = db.Tasks.Find(id);
+            // save deleted date
+            if (!oldTask.Deleted && task.Deleted) { task.DeletedAt = DateTime.Now; }
+            // save completed at
+            if (!oldTask.Completed && task.Completed) { task.CompletedAt = DateTime.Now; }
 
             try
             {
@@ -79,6 +86,8 @@ namespace App.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (task.Completed) { task.CompletedAt = DateTime.Now; }
+
             db.Tasks.Add(task);
             db.SaveChanges();
 
@@ -95,7 +104,9 @@ namespace App.Controllers
                 return NotFound();
             }
 
-            db.Tasks.Remove(task);
+            //db.Tasks.Remove(task);
+            task.Deleted = true;
+            task.DeletedAt = DateTime.Now;
             db.SaveChanges();
 
             return Ok(task);
