@@ -1,9 +1,28 @@
-﻿
-@{
-    ViewBag.Title = "Tasks";
-}
+﻿<h2>Tasks</h2>
 
-<h2>Tasks</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Title</th>
+      <th scope="col">Description</th>
+    </tr>
+  </thead>
+  <tbody id="waiting"></tbody>
+</table>
+
+<button type="button" id="tasks" class="btn btn-xs btn-primary">show completd tasks</button>
+
+<table id="completed-tasks" class="table table-striped" style="display: none">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Title</th>
+      <th scope="col">Description</th>
+    </tr>
+  </thead>
+  <tbody id="completed"></tbody>
+</table>
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
