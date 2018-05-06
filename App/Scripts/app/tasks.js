@@ -19,6 +19,8 @@ function getAll() {
   $.getJSON('/api/tasks').done(function (data) {
     // On success, 'data' contains a list of tasks.
     $.each(data, function (key, item) {
+      // skip item if deleted
+      if (item.Deleted) { return true; }
       // Add a list item for the task
       tableAddRow(item, item.Completed ? "completed" : "waiting");
     });
@@ -30,8 +32,9 @@ function tableAddRow(item, tableName) {
   var checkbox = $(document.createElement('td')).append(checkboxCompleted(item));
   var title = $(document.createElement('td')).append(item.Title);
   var description = $(document.createElement('td')).append(item.Description);
+  var destroyButton = $(document.createElement('td')).append(deleteButton(item));
 
-  var row = $(document.createElement('tr')).append(checkbox, title, description);
+  var row = $(document.createElement('tr')).append(checkbox, title, description, destroyButton);
 
   $("tbody#" + tableName).append(row);
 }
@@ -44,4 +47,26 @@ function checkboxCompleted(item) {
 function toggleCheckbox(element) {
   element.checked = !element.checked;
   console.log('task change completed');
+}
+
+function deleteButton(item) {
+  var a = $(document.createElement('a')).attr('id', item.Id).attr('onclick', 'deleteItem(this)');
+  var icon = $(document.createElement('i')).addClass('glyphicon glyphicon-trash');
+  return a.append(icon);
+}
+
+function deleteItem(item) {
+  var result = confirm("Are you sure?");
+  if (result) {
+    $.ajax({
+      url: '/api/tasks/' + item.id,
+      type: 'DELETE',
+      success: function (result) {
+        //console.log('Item deleted');
+        $('a#' + item.id).closest('tr').remove();
+      }
+    });   
+  } else {
+    console.log('item not deleted');
+  }
 }

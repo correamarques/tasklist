@@ -23,7 +23,8 @@ namespace App.Models
                 {
                     new Task { Title = "CRUD Task", Description = "A lot of things to do", CreatedAt = DateTime.Now.AddDays(-10), UpdatedAt = DateTime.Now },
                     new Task { Title = "Model task", Description = "model with attributes", Completed = true, CompletedAt = DateTime.Now, CreatedAt = DateTime.Now.AddDays(-8), UpdatedAt = DateTime.Now },
-                    new Task { Title = "index return fake list of tasks", Completed = true, CompletedAt = DateTime.Now.AddHours(-4), CreatedAt = DateTime.Now.AddDays(-6), UpdatedAt = DateTime.Now.AddHours(-3) }
+                    new Task { Title = "index return fake list of tasks", Completed = true, CompletedAt = DateTime.Now.AddHours(-4), CreatedAt = DateTime.Now.AddDays(-6), UpdatedAt = DateTime.Now.AddHours(-3) },
+                    new Task { Title = "Deleted item", Deleted = true, DeletedAt = DateTime.Now.AddHours(2), Completed = true, CompletedAt = DateTime.Now.AddHours(-4), CreatedAt = DateTime.Now.AddDays(-6), UpdatedAt = DateTime.Now.AddHours(-3) }
                 };
 
                 context.Tasks.AddRange(tasks);
