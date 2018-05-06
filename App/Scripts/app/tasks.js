@@ -11,7 +11,30 @@
     } else {
       $(this).text('show completed tasks');
     }
-  })
+  });
+
+  $("button#save").on('click', function () {
+    console.log('will save');
+
+    let formData = $("form").serialize();
+
+    console.log(formData);
+
+    $.ajax({
+      type: 'POST',
+      url: '/api/tasks/',
+      data: formData,
+      success: function (data) {
+        // clear the form
+        $('form').trigger("reset");
+        resetTables();
+      },
+      error: function (data) {
+        console.log(data);
+      },
+      contentType: "application/x-www-form-urlencoded",
+    });
+  });
 });
 
 
@@ -53,13 +76,17 @@ function toggleCheckbox(element) {
     contentType: 'application/json',
     data: JSON.stringify(data), // access in body
   }).done(function () {
-    $("tbody tr").remove();
-    getAll();
+    resetTables();
   }).fail(function (msg) {
     //console.log('FAIL');
   }).always(function (msg) {
     //console.log('ALWAYS');
   });
+}
+
+function resetTables() {
+  $("tbody tr").remove();
+  getAll();
 }
 
 function deleteButton(item) {
