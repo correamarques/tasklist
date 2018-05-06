@@ -57,6 +57,7 @@ namespace App.Controllers
             if (!oldTask.Deleted && task.Deleted) { task.DeletedAt = DateTime.Now; }
             // save completed at
             if (!oldTask.Completed && task.Completed) { task.CompletedAt = DateTime.Now; }
+            if (oldTask.Completed && !task.Completed) { task.CompletedAt = null; }
 
             try
             {
