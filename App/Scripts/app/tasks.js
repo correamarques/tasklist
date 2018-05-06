@@ -41,12 +41,25 @@ function tableAddRow(item, tableName) {
 
 function checkboxCompleted(item) {
   return $(document.createElement('input')).attr('type', 'checkbox').attr('name', 'task')
-    .attr('onchange', 'toggleCheckbox(this)').attr('checked', item.Completed).val(item.Id);
+    .attr('onchange', 'toggleCheckbox(this)').attr('checked', item.Completed).val(item.Id)
+    .attr('title', item.Title);
 }
 
 function toggleCheckbox(element) {
-  element.checked = !element.checked;
-  console.log('task change completed');
+  let data = { "Completed": element.checked, "Id": element.value, "Title": element.title };
+  $.ajax({
+    type: 'PUT',
+    url: '/api/tasks/' + element.value,
+    contentType: 'application/json',
+    data: JSON.stringify(data), // access in body
+  }).done(function () {
+    $("tbody tr").remove();
+    getAll();
+  }).fail(function (msg) {
+    //console.log('FAIL');
+  }).always(function (msg) {
+    //console.log('ALWAYS');
+  });
 }
 
 function deleteButton(item) {
